@@ -17,7 +17,7 @@ export function Button({ className, children, variant = 'white' }: ButtonProps) 
     <button
       className={classNames(
         className,
-        'py-1 px-4 text-sm font-bold leading-6 rounded-lg shadow-button border h-fit',
+        'py-1 px-4 text-sm font-bold leading-6 rounded-lg shadow-button border border-solid h-fit hover:cursor-pointer',
         variantClasses[variant],
       )}
     >

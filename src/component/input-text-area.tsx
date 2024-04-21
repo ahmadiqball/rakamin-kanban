@@ -17,7 +17,7 @@ export const InputTextArea = forwardRef<HTMLTextAreaElement, InputTextAreaProps>
           placeholder={placeholder}
           className={classNames(
             className,
-            'block resize-none py-1 px-4 mt-4 bg-white border-2 border-grey-500 rounded-lg text-sm leading-6 placeholder:(color-grey-700)',
+            'block resize-none py-1 px-4 mt-4 bg-white border-2 border-solid border-grey-500 rounded-lg text-sm leading-6 placeholder:(color-grey-700)',
           )}
           {...props}
         />

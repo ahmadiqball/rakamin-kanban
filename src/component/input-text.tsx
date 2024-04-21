@@ -17,7 +17,7 @@ export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
           placeholder={placeholder}
           className={classNames(
             className,
-            'block py-1 px-4 mt-4 bg-white border-2 border-grey-500 rounded-lg text-sm leading-6 placeholder:(color-grey-700)',
+            'block py-1 px-4 mt-4 bg-white border-2 border-solid border-grey-500 rounded-lg text-sm leading-6 placeholder:(color-grey-700)',
           )}
           {...props}
         />

@@ -4,6 +4,7 @@ export default defineConfig({
   theme: {
     fontFamily: {
       nunito: 'Nunito Sans',
+      inter: 'Inter',
     },
     boxShadow: {
       button: '0px 1px 2px 0px rgba(0, 0, 0, 0.12)',
