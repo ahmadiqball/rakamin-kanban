@@ -14,11 +14,13 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.1.1",
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -36,6 +38,7 @@
     "globals": "^15.0.0",
     "prettier": "3.2.5",
     "typescript": "^5.4.5",
+    "unocss": "^0.59.4",
     "vite": "^5.2.0"
   },
   "lint-staged": {
