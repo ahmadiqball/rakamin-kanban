@@ -3,7 +3,12 @@ import { KanbanV1 } from '~~/pages/kanban-v1';
 
 const routes: RouteObject[] = [
   {
-    errorElement: <Navigate replace to='/' />,
+    errorElement: (
+      <Navigate
+        replace
+        to='/'
+      />
+    ),
     id: 'root',
     loader: () => {
       return redirect('/v1');
