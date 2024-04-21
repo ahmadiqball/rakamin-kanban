@@ -1,4 +1,4 @@
-import { defineConfig } from 'unocss';
+import { defineConfig, transformerDirectives, transformerVariantGroup } from 'unocss';
 
 export default defineConfig({
   theme: {
@@ -6,14 +6,16 @@ export default defineConfig({
       nunito: 'Nunito Sans',
     },
     boxShadow: {
-      'modal': '0px 4px 8px 0px rgba(0, 0, 0, 0.1)',
-      'dropdown': '0px 4px 4px 0px rgba(0, 0, 0, 0.08)',
+      button: '0px 1px 2px 0px rgba(0, 0, 0, 0.12)',
+      modal: '0px 4px 8px 0px rgba(0, 0, 0, 0.1)',
+      dropdown: '0px 4px 4px 0px rgba(0, 0, 0, 0.08)',
     },
     colors: {
       dark: {
         500: '#404040',
         600: '#333333',
-        700: '#1E1F21',
+        700: '#1D1F20',
+        800: '#1E1F21',
       },
       grey: {
         300: '#FAFAFA',
@@ -41,7 +43,8 @@ export default defineConfig({
         100: '#FFFAFA',
         300: '#F5B1B7',
         700: '#E11428',
-      }
+      },
     },
   },
+  transformers: [transformerVariantGroup(), transformerDirectives()],
 });
