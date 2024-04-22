@@ -21,8 +21,8 @@ export function KanbanV1() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: 'ahmad.iqbal@rakamin.com',
-          password: 'password',
+          email: import.meta.env.VITE_AUTH_EMAIL,
+          password: import.meta.env.VITE_AUTH_PASSWORD,
         }),
       });
 
