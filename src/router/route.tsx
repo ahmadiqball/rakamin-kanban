@@ -1,4 +1,4 @@
-import { RouteObject, Navigate, redirect, createBrowserRouter } from 'react-router-dom';
+import { RouteObject, Navigate, createBrowserRouter } from 'react-router-dom';
 import { KanbanV1 } from '~~/pages/kanban-v1';
 
 const routes: RouteObject[] = [
@@ -10,9 +10,12 @@ const routes: RouteObject[] = [
       />
     ),
     id: 'root',
-    loader: () => {
-      return redirect('/v1');
-    },
+    element: (
+      <Navigate
+        replace
+        to='/v1'
+      />
+    ),
     path: '/',
   },
   {
