@@ -6,6 +6,7 @@ interface TaskDropdownProps {
   moveAction: (direction: string) => void;
   firstGroup: boolean;
   lastGroup: boolean;
+  openModal: boolean;
 }
 
 export function TaskDropdown({
@@ -14,7 +15,10 @@ export function TaskDropdown({
   lastGroup,
   deleteAction,
   moveAction,
+  openModal,
 }: TaskDropdownProps) {
+  if (!openModal) return null;
+
   return (
     <div
       className={classNames(

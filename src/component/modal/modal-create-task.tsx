@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthQueryResult, TodosQueryResult } from '~~/typings/query.entity';
 
 interface ModalCreateTaskProps {
+  openModal: boolean;
   closeModal: () => void;
   groupId: number;
 }
@@ -15,7 +16,7 @@ interface InputData {
   progress_percentage: number;
 }
 
-export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
+export function ModalCreateTask({ openModal, closeModal, groupId }: ModalCreateTaskProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
@@ -60,7 +61,10 @@ export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
   }
 
   return (
-    <ModalContainer className='w-105'>
+    <ModalContainer
+      className='w-105'
+      openModal={openModal}
+    >
       <div className='flex justify-between items-center'>
         <h5 className='color-dark-700 text-lg font-bold'>Create Task</h5>
         <i

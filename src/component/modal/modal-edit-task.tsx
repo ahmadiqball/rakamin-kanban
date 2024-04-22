@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
 interface ModalEditTaskProps {
+  openModal: boolean;
   closeModal: () => void;
   groupId: number;
   todoId: number;
@@ -19,6 +20,7 @@ interface InputData {
 }
 
 export function ModalEditTask({
+  openModal,
   closeModal,
   groupId,
   todoId,
@@ -76,7 +78,10 @@ export function ModalEditTask({
   }
 
   return (
-    <ModalContainer className='w-105'>
+    <ModalContainer
+      className='w-105'
+      openModal={openModal}
+    >
       <div className='flex justify-between items-center'>
         <h5 className='color-dark-700 text-lg font-bold'>Create Task</h5>
         <i

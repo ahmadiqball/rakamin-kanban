@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthQueryResult, TodosQueryResult } from '~~/typings/query.entity';
 
 interface ModalNewGroupProps {
+  openModal: boolean;
   closeModal: () => void;
 }
 
@@ -15,7 +16,7 @@ interface InputData {
   description: string;
 }
 
-export function ModalNewGroup({ closeModal }: ModalNewGroupProps) {
+export function ModalNewGroup({ openModal, closeModal }: ModalNewGroupProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
@@ -59,7 +60,10 @@ export function ModalNewGroup({ closeModal }: ModalNewGroupProps) {
   }
 
   return (
-    <ModalContainer className='w-105'>
+    <ModalContainer
+      className='w-105'
+      openModal={openModal}
+    >
       <h5 className='color-dark-700 text-lg font-bold'>Add New Group</h5>
       <form
         className='mt-6 flex flex-col gap-5'

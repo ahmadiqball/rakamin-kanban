@@ -4,12 +4,13 @@ import { useMutation, useQueryClient } from 'react-query';
 import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
 interface ModalDeleteTaskProps {
+  openModal: boolean;
   closeModal: () => void;
   groupId: number;
   todoId: number;
 }
 
-export function ModalDeleteTask({ closeModal, groupId, todoId }: ModalDeleteTaskProps) {
+export function ModalDeleteTask({ openModal, closeModal, groupId, todoId }: ModalDeleteTaskProps) {
   const queryClient = useQueryClient();
 
   const deleteTodoItem = useMutation({
@@ -51,7 +52,10 @@ export function ModalDeleteTask({ closeModal, groupId, todoId }: ModalDeleteTask
   }
 
   return (
-    <ModalContainer className='w-105'>
+    <ModalContainer
+      className='w-105'
+      openModal={openModal}
+    >
       <div className='flex justify-between items-center'>
         <h5 className='color-dark-700 text-lg font-bold'>Delete Task</h5>
         <i

@@ -59,57 +59,58 @@ export function BoardGroup({
   }
 
   return (
-    <div
-      onDragOver={dragOverHandler}
-      onDragLeave={dragLeaveHandler}
-      className={classNames(
-        'p-4 border-2 border-solid rounded-1 flex flex-col gap-2 w-93 min-w-93 h-fit',
-        variantClasses[variant as keyof typeof variantClasses],
-      )}
-    >
-      <span
+    <>
+      <ModalCreateTask
+        openModal={openModal}
+        closeModal={() => setOpenModal(false)}
+        groupId={groupId}
+      />
+
+      <div
+        onDragOver={dragOverHandler}
+        onDragLeave={dragLeaveHandler}
         className={classNames(
-          'py-0.5 px-2 border-1 border-solid rounded-1 text-xs leading-5 inline w-fit',
+          'p-4 border-2 border-solid rounded-1 flex flex-col gap-2 w-93 min-w-93 h-fit',
           variantClasses[variant as keyof typeof variantClasses],
         )}
       >
-        {title}
-      </span>
-      <p className='color-dark-400 text-xs font-bold leading-5'>{description}</p>
-      <div className='flex flex-col gap-3'>
-        {todo && todo.length > 0 ? (
-          todo?.map((item) => (
-            <TaskCard
-              firstGroup={firstGroup}
-              lastGroup={lastGroup}
-              key={item.id}
-              todoId={item.id}
-              groupId={groupId}
-              name={item.name}
-              progress={item.progress_percentage}
-            />
-          ))
-        ) : (
-          <div className='px-4 py-2 bg-grey-300 rounded-1 border border-solid border-grey-500 color-grey-800'>
-            No task
-          </div>
-        )}
+        <span
+          className={classNames(
+            'py-0.5 px-2 border-1 border-solid rounded-1 text-xs leading-5 inline w-fit',
+            variantClasses[variant as keyof typeof variantClasses],
+          )}
+        >
+          {title}
+        </span>
+        <p className='color-dark-400 text-xs font-bold leading-5'>{description}</p>
+        <div className='flex flex-col gap-3'>
+          {todo && todo.length > 0 ? (
+            todo?.map((item) => (
+              <TaskCard
+                firstGroup={firstGroup}
+                lastGroup={lastGroup}
+                key={item.id}
+                todoId={item.id}
+                groupId={groupId}
+                name={item.name}
+                progress={item.progress_percentage}
+              />
+            ))
+          ) : (
+            <div className='px-4 py-2 bg-grey-300 rounded-1 border border-solid border-grey-500 color-grey-800'>
+              No task
+            </div>
+          )}
+        </div>
+
+        <button
+          onClick={() => setOpenModal(!openModal)}
+          className='border-none bg-transparent w-fit color-dark-700 text-xs leading-5 flex items-center gap-1.5 hover:cursor-pointer'
+        >
+          <i className='i-kra-plus-circle text-4.5 color-dark-600' />
+          New Task
+        </button>
       </div>
-
-      <button
-        onClick={() => setOpenModal(!openModal)}
-        className='border-none bg-transparent w-fit color-dark-700 text-xs leading-5 flex items-center gap-1.5 hover:cursor-pointer'
-      >
-        <i className='i-kra-plus-circle text-4.5 color-dark-600' />
-        New Task
-      </button>
-
-      {openModal ? (
-        <ModalCreateTask
-          closeModal={() => setOpenModal(false)}
-          groupId={groupId}
-        />
-      ) : null}
-    </div>
+    </>
   );
 }

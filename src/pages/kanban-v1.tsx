@@ -45,6 +45,11 @@ export function KanbanV1() {
 
   return (
     <main>
+      <ModalNewGroup
+        closeModal={() => setOpenModal(false)}
+        openModal={openModal}
+      />
+
       <section className='flex gap-2.5 items-center px-5 py-4.5 border-b border-b-solid border-grey-500'>
         <h1>Product Roadmap</h1>
         <Button
@@ -69,8 +74,6 @@ export function KanbanV1() {
           />
         ))}
       </section>
-
-      {openModal ? <ModalNewGroup closeModal={() => setOpenModal(false)} /> : null}
     </main>
   );
 }
