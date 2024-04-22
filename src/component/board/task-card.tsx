@@ -1,14 +1,23 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { TaskDropdown } from './task-dropdown';
+import { ModalEditTask } from '../modal/modal-edit-task';
 
 interface TaskCardProps {
   name: string;
   progress: number | null;
+  groupId: number;
+  todoId: number;
 }
 
-export function TaskCard({ name, progress }: TaskCardProps) {
-  const [openDropdown, setIsOpenDropdown] = useState(false);
+export function TaskCard({ name, progress, groupId, todoId }: TaskCardProps) {
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+
+  function openEditModalHandler() {
+    setOpenEditModal(true);
+    setOpenDropdown(false);
+  }
 
   return (
     <div className='relative p-4 bg-grey-300 rounded-1 border border-solid border-grey-500'>
@@ -34,7 +43,7 @@ export function TaskCard({ name, progress }: TaskCardProps) {
         </div>
 
         <button
-          onClick={() => setIsOpenDropdown(!openDropdown)}
+          onClick={() => setOpenDropdown(!openDropdown)}
           className='h-6 w-6 flex gap-0.75 items-center justify-center bg-transparent border-none rounded-1 transition-all-250 hover:(bg-grey-400 cursor-pointer)'
         >
           {[...Array(3)].map((item, index) => (
@@ -44,7 +53,14 @@ export function TaskCard({ name, progress }: TaskCardProps) {
             />
           ))}
         </button>
-        {openDropdown ? <TaskDropdown /> : null}
+        {openDropdown ? <TaskDropdown editAction={openEditModalHandler} /> : null}
+        {openEditModal ? (
+          <ModalEditTask
+            closeModal={() => setOpenEditModal(false)}
+            todoId={todoId}
+            groupId={groupId}
+          />
+        ) : null}
       </div>
     </div>
   );

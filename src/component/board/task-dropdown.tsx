@@ -1,4 +1,8 @@
-export function TaskDropdown() {
+interface TaskDropdownProps {
+  editAction: () => void;
+}
+
+export function TaskDropdown({ editAction }: TaskDropdownProps) {
   return (
     <div className='absolute top-full left-full -translate-5 py-2 w-80 bg-white shadow-dropdown color-dark-600 rounded-lg font-semibold z-10'>
       <div className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'>
@@ -11,7 +15,10 @@ export function TaskDropdown() {
         Move Left
       </div>
 
-      <div className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'>
+      <div
+        onClick={editAction}
+        className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'
+      >
         <i className='i-kra-pencil text-2xl' />
         Edit
       </div>

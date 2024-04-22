@@ -3,7 +3,7 @@ import { Button } from '../design-system/button';
 import { InputText } from '../design-system/input-text';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodosQueryResult } from '~~/typings/query-type';
+import { TodoQueryResult } from '~~/typings/query-type';
 
 interface ModalNewGroupProps {
   closeModal: () => void;
@@ -41,7 +41,7 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProp
     },
     onSuccess: (data) => {
       if (!data.message) {
-        queryClient.setQueryData(['todo', groupId], (oldData?: Array<TodosQueryResult>) => {
+        queryClient.setQueryData(['todo', groupId], (oldData?: Array<TodoQueryResult>) => {
           const newData = oldData?.filter((todo) => todo.id !== data.id);
           newData?.push(data);
           newData?.sort((a, b) => a.id - b.id);
@@ -55,11 +55,12 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProp
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-
+    const todosData: Array<TodoQueryResult> = queryClient.getQueryData(['todo', groupId]) || [];
+    const taskData = todosData.filter((todo) => todo.id === todoId)[0];
     const formValue = formRef.current!;
     const data = {
-      name: formValue.taskName.value,
-      progress_percentage: formValue.progress.value || 0,
+      name: formValue.taskName.value || taskData.name,
+      progress_percentage: formValue.progress.value || taskData.progress_percentage,
       target_todo_id: groupId,
     };
 

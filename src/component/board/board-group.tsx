@@ -68,6 +68,8 @@ export function BoardGroup({ groupId, description, title, variant }: BoardGroupP
           todo?.map((item) => (
             <TaskCard
               key={item.id}
+              todoId={item.id}
+              groupId={groupId}
               name={item.name}
               progress={item.progress_percentage}
             />

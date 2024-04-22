@@ -6,3 +6,13 @@ export interface TodosQueryResult {
   updated_at: string;
   description: string;
 }
+
+export interface TodoQueryResult {
+  id: number;
+  name: string;
+  done: null;
+  todo_id: number;
+  created_at: string;
+  updated_at: string;
+  progress_percentage: number | null;
+}
