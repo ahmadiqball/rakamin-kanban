@@ -3,11 +3,7 @@ import { useQuery } from 'react-query';
 import { BoardGroup } from '~~/component/board/board-group';
 import { Button } from '~~/component/design-system/button';
 import { ModalNewGroup } from '~~/component/modal/modal-new-group';
-import { TodosQueryResult } from '~~/typings/query-type';
-
-interface AuthQueryResult {
-  auth_token: string;
-}
+import { AuthQueryResult, TodosQueryResult } from '~~/typings/query-type';
 
 export function KanbanV1() {
   const [openModal, setOpenModal] = useState(false);

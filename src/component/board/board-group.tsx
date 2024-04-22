@@ -3,6 +3,7 @@ import { TaskCard } from './task-card';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { ModalCreateTask } from '../modal/modal-create-task';
+import { TodoQueryResult } from '~~/typings/query-type';
 
 interface BoardGroupProps {
   description?: string;
@@ -11,16 +12,6 @@ interface BoardGroupProps {
   title: string;
   groupId: number;
   variant: number;
-}
-
-interface TodoQueryResult {
-  id: number;
-  name: string;
-  done: null;
-  todo_id: number;
-  created_at: string;
-  updated_at: string;
-  progress_percentage: number | null;
 }
 
 const variantClasses = {

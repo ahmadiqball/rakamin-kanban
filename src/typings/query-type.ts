@@ -16,3 +16,7 @@ export interface TodoQueryResult {
   updated_at: string;
   progress_percentage: number | null;
 }
+
+export interface AuthQueryResult {
+  auth_token: string;
+}
