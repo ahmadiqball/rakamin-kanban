@@ -3,7 +3,7 @@ import { Button } from '../design-system/button';
 import { InputText } from '../design-system/input-text';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodosQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodosQueryResult } from '~~/typings/query-type';
 
 interface ModalCreateTaskProps {
   closeModal: () => void;
@@ -21,11 +21,11 @@ export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
 
   const createTodoItem = useMutation({
     mutationFn: async (data: InputData) => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
       const res = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${auth.auth_token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

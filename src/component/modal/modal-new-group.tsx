@@ -4,7 +4,7 @@ import { InputText } from '../design-system/input-text';
 import { InputTextArea } from '../design-system/input-text-area';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodosQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodosQueryResult } from '~~/typings/query-type';
 
 interface ModalNewGroupProps {
   closeModal: () => void;
@@ -21,11 +21,11 @@ export function ModalNewGroup({ closeModal }: ModalNewGroupProps) {
 
   const createTodoGroup = useMutation({
     mutationFn: async (data: InputData) => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
       const res = await fetch('https://todo-api-18-140-52-65.rakamin.com/todos', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${auth.auth_token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),

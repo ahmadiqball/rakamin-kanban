@@ -23,7 +23,7 @@ export function KanbanV1() {
       });
 
       const data = await res.json();
-      sessionStorage.setItem('userId', data.auth_token);
+
       return data;
     },
   });

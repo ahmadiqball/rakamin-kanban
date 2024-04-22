@@ -4,7 +4,7 @@ import { TaskDropdown } from './task-dropdown';
 import { ModalEditTask } from '../modal/modal-edit-task';
 import { ModalDeleteTask } from '../modal/modal-delete-task';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
 
 interface TaskCardProps {
   firstGroup: boolean;
@@ -31,7 +31,7 @@ export function TaskCard({
 
   const moveTodoItem = useMutation({
     mutationFn: async (newGroupId: number) => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
       const todosData: Array<TodoQueryResult> = queryClient.getQueryData(['todo', groupId]) || [];
       const taskData = todosData.filter((todo) => todo.id === todoId)[0];
       const data = {
@@ -44,7 +44,7 @@ export function TaskCard({
         {
           method: 'PATCH',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${auth.auth_token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),

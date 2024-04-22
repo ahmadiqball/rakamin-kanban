@@ -1,7 +1,7 @@
 import { Button } from '../design-system/button';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
 
 interface ModalDeleteTaskProps {
   closeModal: () => void;
@@ -14,13 +14,13 @@ export function ModalDeleteTask({ closeModal, groupId, todoId }: ModalDeleteTask
 
   const deleteTodoItem = useMutation({
     mutationFn: async () => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
       const res = await fetch(
         `https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items/${todoId}`,
         {
           method: 'DELETE',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${auth.auth_token}`,
             'Content-Type': 'application/json',
           },
         },

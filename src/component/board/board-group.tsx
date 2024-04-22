@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { TaskCard } from './task-card';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import { ModalCreateTask } from '../modal/modal-create-task';
-import { TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
 
 interface BoardGroupProps {
   description?: string;
@@ -30,15 +30,16 @@ export function BoardGroup({
   lastGroup,
 }: BoardGroupProps) {
   const [openModal, setOpenModal] = useState(false);
+  const queryClient = useQueryClient();
 
   const { data: todo } = useQuery({
     queryKey: ['todo', groupId],
     queryFn: async (): Promise<Array<TodoQueryResult>> => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
 
       const res = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${auth.auth_token}`,
         },
       });
       const data = await res.json();

@@ -3,7 +3,7 @@ import { Button } from '../design-system/button';
 import { InputText } from '../design-system/input-text';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
 
 interface ModalEditTaskProps {
   closeModal: () => void;
@@ -22,13 +22,13 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProp
 
   const editTodoItem = useMutation({
     mutationFn: async (data: InputData) => {
-      const token = sessionStorage.getItem('userId');
+      const auth: AuthQueryResult = queryClient.getQueryData(['auth'])!;
       const res = await fetch(
         `https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items/${todoId}`,
         {
           method: 'PATCH',
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${auth.auth_token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
@@ -55,7 +55,7 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProp
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-    const todosData: Array<TodoQueryResult> = queryClient.getQueryData(['todo', groupId]) || [];
+    const todosData: Array<TodoQueryResult> = queryClient.getQueryData(['todo', groupId])!;
     const taskData = todosData.filter((todo) => todo.id === todoId)[0];
     const formValue = formRef.current!;
     const data = {
