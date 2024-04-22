@@ -4,7 +4,7 @@ import { InputText } from '../design-system/input-text';
 import { InputTextArea } from '../design-system/input-text-area';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { AuthQueryResult, TodosQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodosQueryResult } from '~~/typings/query.entity';
 
 interface ModalNewGroupProps {
   closeModal: () => void;

@@ -3,7 +3,7 @@ import { TaskCard } from './task-card';
 import { useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 import { ModalCreateTask } from '../modal/modal-create-task';
-import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
 interface BoardGroupProps {
   description?: string;

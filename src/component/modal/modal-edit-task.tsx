@@ -3,7 +3,7 @@ import { Button } from '../design-system/button';
 import { InputText } from '../design-system/input-text';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
-import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
 interface ModalEditTaskProps {
   closeModal: () => void;

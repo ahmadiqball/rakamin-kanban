@@ -4,7 +4,7 @@ import { TaskDropdown } from './task-dropdown';
 import { ModalEditTask } from '../modal/modal-edit-task';
 import { ModalDeleteTask } from '../modal/modal-delete-task';
 import { useMutation, useQueryClient } from 'react-query';
-import { AuthQueryResult, TodoQueryResult } from '~~/typings/query-type';
+import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
 interface TaskCardProps {
   firstGroup: boolean;
