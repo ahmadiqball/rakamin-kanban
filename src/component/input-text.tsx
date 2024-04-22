@@ -10,7 +10,7 @@ interface InputTextProps extends InputHTMLAttributes<HTMLInputElement> {
 export const InputText = forwardRef<HTMLInputElement, InputTextProps>(
   ({ label, placeholder, className, ...props }, ref) => {
     return (
-      <div className='w-full color-dark-400'>
+      <div className='w-full color-dark-400 font-bold'>
         <label className='text-xs'>{label}</label>
         <input
           ref={ref}

@@ -1,11 +1,13 @@
 import classNames from 'classnames';
 import { TaskCard } from './task-card';
 import { useQuery } from 'react-query';
+import { useState } from 'react';
+import { ModalCreateTask } from './modal-create-task';
 
 interface BoardGroupProps {
   description?: string;
   title: string;
-  id: number;
+  groupId: number;
   variant: number;
 }
 
@@ -19,20 +21,22 @@ interface TodoQueryResult {
   progress_percentage: number | null;
 }
 
-export default function BoardGroup({ id, description, title, variant }: BoardGroupProps) {
-  const variantClasses = {
-    1: 'bg-blue-100 border-blue-300 color-blue-700',
-    2: 'bg-orange-100 border-orange-300 color-orange-700',
-    3: 'bg-red-100 border-red-300 color-red-700',
-    0: 'bg-green-100 border-green-300 color-green-700',
-  };
+const variantClasses = {
+  1: 'bg-blue-100 border-blue-300 color-blue-700',
+  2: 'bg-orange-100 border-orange-300 color-orange-700',
+  3: 'bg-red-100 border-red-300 color-red-700',
+  0: 'bg-green-100 border-green-300 color-green-700',
+};
+
+export default function BoardGroup({ groupId, description, title, variant }: BoardGroupProps) {
+  const [openModal, setOpenModal] = useState(false);
 
   const { data: todo } = useQuery({
-    queryKey: ['todo', id],
+    queryKey: ['todo', groupId],
     queryFn: async (): Promise<Array<TodoQueryResult>> => {
       const token = sessionStorage.getItem('userId');
 
-      const res = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${id}/items`, {
+      const res = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,7 +50,7 @@ export default function BoardGroup({ id, description, title, variant }: BoardGro
   return (
     <div
       className={classNames(
-        'p-4 border-2 border-solid rounded-1 flex flex-col gap-2 w-93 h-fit',
+        'p-4 border-2 border-solid rounded-1 flex flex-col gap-2 w-93 min-w-93 h-fit',
         variantClasses[variant as keyof typeof variantClasses],
       )}
     >
@@ -75,10 +79,20 @@ export default function BoardGroup({ id, description, title, variant }: BoardGro
         )}
       </div>
 
-      <button className='border-none bg-transparent w-fit color-dark-700 text-xs leading-5 flex items-center gap-1.5 hover:cursor-pointer'>
+      <button
+        onClick={() => setOpenModal(!openModal)}
+        className='border-none bg-transparent w-fit color-dark-700 text-xs leading-5 flex items-center gap-1.5 hover:cursor-pointer'
+      >
         <i className='i-kra-plus-circle text-4.5 color-dark-600' />
         New Task
       </button>
+
+      {openModal ? (
+        <ModalCreateTask
+          closeModal={() => setOpenModal(false)}
+          groupId={groupId}
+        />
+      ) : null}
     </div>
   );
 }

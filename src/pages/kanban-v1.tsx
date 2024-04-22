@@ -3,18 +3,10 @@ import { useQuery } from 'react-query';
 import BoardGroup from '~~/component/board-group';
 import { Button } from '~~/component/button';
 import { ModalNewGroup } from '~~/component/modal-new-group';
+import { TodosQueryResult } from '~~/typings/query-type';
 
 interface AuthQueryResult {
   auth_token: string;
-}
-
-interface TodosQueryResult {
-  id: number;
-  title: string;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
-  description: string;
 }
 
 export function KanbanV1() {
@@ -41,7 +33,7 @@ export function KanbanV1() {
   });
 
   const { data: todos } = useQuery({
-    queryKey: ['todos', auth],
+    queryKey: ['todos'],
     queryFn: async (): Promise<Array<TodosQueryResult>> => {
       const res = await fetch('https://todo-api-18-140-52-65.rakamin.com/todos', {
         headers: {
@@ -74,7 +66,7 @@ export function KanbanV1() {
             description={todo.description}
             title={todo.title}
             variant={todo.id % 4}
-            id={todo.id}
+            groupId={todo.id}
             key={todo.id}
           />
         ))}

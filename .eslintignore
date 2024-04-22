@@ -3,3 +3,6 @@ build
 
 # Ignore public content
 public
+
+# Assets
+src/assets
