@@ -1,6 +1,20 @@
-import { defineConfig, transformerDirectives, transformerVariantGroup } from 'unocss';
+import {
+  defineConfig,
+  presetIcons,
+  presetUno,
+  transformerDirectives,
+  transformerVariantGroup,
+} from 'unocss';
 
 export default defineConfig({
+  presets: [
+    presetUno(),
+    presetIcons({
+      collections: {
+        kra: () => import('./src/assets/icons/kra.json').then((i) => i.default),
+      },
+    }),
+  ],
   theme: {
     fontFamily: {
       nunito: 'Nunito Sans',
