@@ -6,7 +6,7 @@ const routes: RouteObject[] = [
     errorElement: (
       <Navigate
         replace
-        to='/'
+        to='/v1'
       />
     ),
     id: 'root',
