@@ -9,14 +9,6 @@ const routes: RouteObject[] = [
         to='/v1'
       />
     ),
-    id: 'root',
-    element: (
-      <Navigate
-        replace
-        to='/v1'
-      />
-    ),
-    path: '/',
   },
   {
     Component: KanbanV1,
