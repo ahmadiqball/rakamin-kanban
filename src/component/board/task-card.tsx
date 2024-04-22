@@ -148,6 +148,8 @@ export function TaskCard({
         ) : null}
         {openEditModal ? (
           <ModalEditTask
+            defaultName={name}
+            defaultProgress={progress}
             closeModal={() => setOpenEditModal(false)}
             todoId={todoId}
             groupId={groupId}

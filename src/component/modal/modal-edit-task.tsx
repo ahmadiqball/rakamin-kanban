@@ -9,6 +9,8 @@ interface ModalEditTaskProps {
   closeModal: () => void;
   groupId: number;
   todoId: number;
+  defaultName: string;
+  defaultProgress: number | null;
 }
 
 interface InputData {
@@ -16,7 +18,13 @@ interface InputData {
   progress_percentage: number;
 }
 
-export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProps) {
+export function ModalEditTask({
+  closeModal,
+  groupId,
+  todoId,
+  defaultName,
+  defaultProgress,
+}: ModalEditTaskProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
@@ -86,6 +94,7 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProp
           placeholder='Type your Task'
           name='taskName'
           className='w-full'
+          defaultValue={defaultName}
         />
         <InputText
           label='Progress'
@@ -93,6 +102,7 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProp
           type='number'
           name='progress'
           className='w-36'
+          defaultValue={defaultProgress || undefined}
         />
         <div className='flex justify-end gap-2.5 pt-3'>
           <Button onClick={closeModal}>Cancel</Button>
