@@ -50,6 +50,7 @@ export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
     event.preventDefault();
 
     const formValue = formRef.current!;
+
     const data = {
       name: formValue.taskName.value,
       progress_percentage: formValue.progress.value,
@@ -82,6 +83,8 @@ export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
           label='Progress'
           placeholder='70%'
           type='number'
+          max={100}
+          min={0}
           name='progress'
           className='w-36'
         />

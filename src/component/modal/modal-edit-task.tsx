@@ -103,6 +103,8 @@ export function ModalEditTask({
           name='progress'
           className='w-36'
           defaultValue={defaultProgress || undefined}
+          max={100}
+          min={0}
         />
         <div className='flex justify-end gap-2.5 pt-3'>
           <Button onClick={closeModal}>Cancel</Button>
