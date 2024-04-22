@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
-import BoardGroup from '~~/component/board-group';
-import { Button } from '~~/component/button';
-import { ModalNewGroup } from '~~/component/modal-new-group';
+import { BoardGroup } from '~~/component/board/board-group';
+import { Button } from '~~/component/design-system/button';
+import { ModalNewGroup } from '~~/component/modal/modal-new-group';
 import { TodosQueryResult } from '~~/typings/query-type';
 
 interface AuthQueryResult {

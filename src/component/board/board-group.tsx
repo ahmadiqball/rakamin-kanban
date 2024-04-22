@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { TaskCard } from './task-card';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
-import { ModalCreateTask } from './modal-create-task';
+import { ModalCreateTask } from '../modal/modal-create-task';
 
 interface BoardGroupProps {
   description?: string;
@@ -28,7 +28,7 @@ const variantClasses = {
   0: 'bg-green-100 border-green-300 color-green-700',
 };
 
-export default function BoardGroup({ groupId, description, title, variant }: BoardGroupProps) {
+export function BoardGroup({ groupId, description, title, variant }: BoardGroupProps) {
   const [openModal, setOpenModal] = useState(false);
 
   const { data: todo } = useQuery({

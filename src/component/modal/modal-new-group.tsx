@@ -1,28 +1,28 @@
 import { FormEvent, useRef } from 'react';
-import { Button } from './button';
-import { InputText } from './input-text';
+import { Button } from '../design-system/button';
+import { InputText } from '../design-system/input-text';
+import { InputTextArea } from '../design-system/input-text-area';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
 import { TodosQueryResult } from '~~/typings/query-type';
 
 interface ModalNewGroupProps {
   closeModal: () => void;
-  groupId: number;
 }
 
 interface InputData {
-  name: string;
-  progress_percentage: number;
+  title: string;
+  description: string;
 }
 
-export function ModalCreateTask({ closeModal, groupId }: ModalNewGroupProps) {
+export function ModalNewGroup({ closeModal }: ModalNewGroupProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
-  const createTodoItem = useMutation({
+  const createTodoGroup = useMutation({
     mutationFn: async (data: InputData) => {
       const token = sessionStorage.getItem('userId');
-      const res = await fetch(`https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items`, {
+      const res = await fetch('https://todo-api-18-140-52-65.rakamin.com/todos', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export function ModalCreateTask({ closeModal, groupId }: ModalNewGroupProps) {
     },
     onSuccess: (data) => {
       if (!data.message) {
-        queryClient.setQueryData(['todo', groupId], (oldData?: Array<TodosQueryResult>) => {
+        queryClient.setQueryData(['todos'], (oldData?: Array<TodosQueryResult>) => {
           return [...(oldData || []), data];
         });
 
@@ -51,39 +51,32 @@ export function ModalCreateTask({ closeModal, groupId }: ModalNewGroupProps) {
 
     const formValue = formRef.current!;
     const data = {
-      name: formValue.taskName.value,
-      progress_percentage: formValue.progress.value,
+      title: formValue.groupTitle.value,
+      description: formValue.description.value,
     };
 
-    createTodoItem.mutate(data);
+    createTodoGroup.mutate(data);
   }
 
   return (
     <ModalContainer className='w-105'>
-      <div className='flex justify-between items-center'>
-        <h5 className='color-dark-700 text-lg font-bold'>Create Task</h5>
-        <i
-          className='i-kra-close color-dark-500 text-2xl hover:cursor-pointer'
-          onClick={closeModal}
-        />
-      </div>
+      <h5 className='color-dark-700 text-lg font-bold'>Add New Group</h5>
       <form
         className='mt-6 flex flex-col gap-5'
         ref={formRef}
         onSubmit={submitHandler}
       >
         <InputText
-          label='Task Name'
-          placeholder='Type your Task'
-          name='taskName'
+          label='Title'
+          placeholder='Title'
+          name='groupTitle'
           className='w-full'
         />
-        <InputText
-          label='Progress'
-          placeholder='70%'
-          type='number'
-          name='progress'
-          className='w-36'
+        <InputTextArea
+          label='Description'
+          placeholder='Description'
+          name='description'
+          className='w-full'
         />
         <div className='flex justify-end gap-2.5 pt-3'>
           <Button onClick={closeModal}>Cancel</Button>
@@ -91,7 +84,7 @@ export function ModalCreateTask({ closeModal, groupId }: ModalNewGroupProps) {
             variant='blue'
             type='submit'
           >
-            Save Task
+            Submit
           </Button>
         </div>
       </form>

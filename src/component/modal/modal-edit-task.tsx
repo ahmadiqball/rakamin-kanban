@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from 'react';
-import { Button } from './button';
-import { InputText } from './input-text';
+import { Button } from '../design-system/button';
+import { InputText } from '../design-system/input-text';
 import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
 import { TodosQueryResult } from '~~/typings/query-type';
@@ -42,7 +42,10 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProp
     onSuccess: (data) => {
       if (!data.message) {
         queryClient.setQueryData(['todo', groupId], (oldData?: Array<TodosQueryResult>) => {
-          return [...(oldData || []), data];
+          const newData = oldData?.filter((todo) => todo.id !== data.id);
+          newData?.push(data);
+          newData?.sort((a, b) => a.id - b.id);
+          return newData || [];
         });
 
         closeModal();
@@ -56,7 +59,8 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProp
     const formValue = formRef.current!;
     const data = {
       name: formValue.taskName.value,
-      progress_percentage: formValue.progress.value,
+      progress_percentage: formValue.progress.value || 0,
+      target_todo_id: groupId,
     };
 
     createTodoItem.mutate(data);
