@@ -5,7 +5,7 @@ import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
 import { TodosQueryResult } from '~~/typings/query-type';
 
-interface ModalNewGroupProps {
+interface ModalCreateTaskProps {
   closeModal: () => void;
   groupId: number;
 }
@@ -15,7 +15,7 @@ interface InputData {
   progress_percentage: number;
 }
 
-export function ModalCreateTask({ closeModal, groupId }: ModalNewGroupProps) {
+export function ModalCreateTask({ closeModal, groupId }: ModalCreateTaskProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 

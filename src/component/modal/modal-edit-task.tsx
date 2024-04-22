@@ -5,7 +5,7 @@ import { ModalContainer } from './modal-container';
 import { useMutation, useQueryClient } from 'react-query';
 import { TodoQueryResult } from '~~/typings/query-type';
 
-interface ModalNewGroupProps {
+interface ModalEditTaskProps {
   closeModal: () => void;
   groupId: number;
   todoId: number;
@@ -16,11 +16,11 @@ interface InputData {
   progress_percentage: number;
 }
 
-export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProps) {
+export function ModalEditTask({ closeModal, groupId, todoId }: ModalEditTaskProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
-  const createTodoItem = useMutation({
+  const editTodoItem = useMutation({
     mutationFn: async (data: InputData) => {
       const token = sessionStorage.getItem('userId');
       const res = await fetch(
@@ -64,7 +64,7 @@ export function ModalEditTask({ closeModal, groupId, todoId }: ModalNewGroupProp
       target_todo_id: groupId,
     };
 
-    createTodoItem.mutate(data);
+    editTodoItem.mutate(data);
   }
 
   return (

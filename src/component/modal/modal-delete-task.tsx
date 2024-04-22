@@ -12,7 +12,7 @@ interface ModalDeleteTaskProps {
 export function ModalDeleteTask({ closeModal, groupId, todoId }: ModalDeleteTaskProps) {
   const queryClient = useQueryClient();
 
-  const createTodoItem = useMutation({
+  const deleteTodoItem = useMutation({
     mutationFn: async () => {
       const token = sessionStorage.getItem('userId');
       const res = await fetch(
@@ -47,7 +47,7 @@ export function ModalDeleteTask({ closeModal, groupId, todoId }: ModalDeleteTask
   });
 
   function deleteHandler() {
-    createTodoItem.mutate();
+    deleteTodoItem.mutate();
   }
 
   return (
