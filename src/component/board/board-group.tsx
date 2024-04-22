@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { TaskCard } from './task-card';
 import { useQuery, useQueryClient } from 'react-query';
-import { useState } from 'react';
+import { DragEvent, useState } from 'react';
 import { ModalCreateTask } from '../modal/modal-create-task';
 import { AuthQueryResult, TodoQueryResult } from '~~/typings/query.entity';
 
@@ -48,8 +48,20 @@ export function BoardGroup({
     },
   });
 
+  function dragOverHandler(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    sessionStorage.setItem('dragGroupId', groupId.toString());
+  }
+
+  function dragLeaveHandler(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    sessionStorage.removeItem('dragGroupId');
+  }
+
   return (
     <div
+      onDragOver={dragOverHandler}
+      onDragLeave={dragLeaveHandler}
       className={classNames(
         'p-4 border-2 border-solid rounded-1 flex flex-col gap-2 w-93 min-w-93 h-fit',
         variantClasses[variant as keyof typeof variantClasses],

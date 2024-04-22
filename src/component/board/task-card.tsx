@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useState } from 'react';
+import { DragEvent, useState } from 'react';
 import { TaskDropdown } from './task-dropdown';
 import { ModalEditTask } from '../modal/modal-edit-task';
 import { ModalDeleteTask } from '../modal/modal-delete-task';
@@ -88,8 +88,23 @@ export function TaskCard({
     moveTodoItem.mutate(groupId + factor);
   }
 
+  function dragEndHandler(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const dragGroupId = parseInt(sessionStorage.getItem('dragGroupId') || '');
+
+    if (dragGroupId && dragGroupId !== groupId) {
+      moveTodoItem.mutate(dragGroupId);
+    }
+
+    sessionStorage.removeItem('dragGroupId');
+  }
+
   return (
-    <div className='relative p-4 bg-grey-300 rounded-1 border border-solid border-grey-500'>
+    <div
+      draggable
+      onDragEnd={dragEndHandler}
+      className='relative p-4 bg-grey-300 rounded-1 border border-solid border-grey-500'
+    >
       <h6 className='color-dark-500 text-sm font-bold leading-6 pb-2'>{name}</h6>
       <div className='pt-2 border-t border-t-dashed border-grey-500 flex items-center justify-between'>
         <div className='flex items-center w-54'>
