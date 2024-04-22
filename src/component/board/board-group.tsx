@@ -6,6 +6,8 @@ import { ModalCreateTask } from '../modal/modal-create-task';
 
 interface BoardGroupProps {
   description?: string;
+  firstGroup: boolean;
+  lastGroup: boolean;
   title: string;
   groupId: number;
   variant: number;
@@ -28,7 +30,14 @@ const variantClasses = {
   0: 'bg-green-100 border-green-300 color-green-700',
 };
 
-export function BoardGroup({ groupId, description, title, variant }: BoardGroupProps) {
+export function BoardGroup({
+  groupId,
+  description,
+  title,
+  variant,
+  firstGroup,
+  lastGroup,
+}: BoardGroupProps) {
   const [openModal, setOpenModal] = useState(false);
 
   const { data: todo } = useQuery({
@@ -67,6 +76,8 @@ export function BoardGroup({ groupId, description, title, variant }: BoardGroupP
         {todo && todo.length > 0 ? (
           todo?.map((item) => (
             <TaskCard
+              firstGroup={firstGroup}
+              lastGroup={lastGroup}
               key={item.id}
               todoId={item.id}
               groupId={groupId}

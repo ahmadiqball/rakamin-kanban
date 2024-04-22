@@ -61,8 +61,10 @@ export function KanbanV1() {
         </Button>
       </section>
       <section className='p-6 flex gap-4 max-w-screen overflow-x-scroll min-h-[calc(100vh-70px)]'>
-        {todos?.map((todo) => (
+        {todos?.map((todo, index) => (
           <BoardGroup
+            firstGroup={index === 0}
+            lastGroup={index === todos.length - 1}
             description={todo.description}
             title={todo.title}
             variant={todo.id % 4}

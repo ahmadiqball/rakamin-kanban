@@ -2,20 +2,36 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { TaskDropdown } from './task-dropdown';
 import { ModalEditTask } from '../modal/modal-edit-task';
+import { ModalDeleteTask } from '../modal/modal-delete-task';
 
 interface TaskCardProps {
+  firstGroup: boolean;
+  lastGroup: boolean;
   name: string;
   progress: number | null;
   groupId: number;
   todoId: number;
 }
 
-export function TaskCard({ name, progress, groupId, todoId }: TaskCardProps) {
+export function TaskCard({
+  name,
+  progress,
+  groupId,
+  todoId,
+  firstGroup,
+  lastGroup,
+}: TaskCardProps) {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   function openEditModalHandler() {
     setOpenEditModal(true);
+    setOpenDropdown(false);
+  }
+
+  function openDeleteModalHandler() {
+    setOpenDeleteModal(true);
     setOpenDropdown(false);
   }
 
@@ -53,10 +69,25 @@ export function TaskCard({ name, progress, groupId, todoId }: TaskCardProps) {
             />
           ))}
         </button>
-        {openDropdown ? <TaskDropdown editAction={openEditModalHandler} /> : null}
+        {openDropdown ? (
+          <TaskDropdown
+            editAction={openEditModalHandler}
+            deleteAction={openDeleteModalHandler}
+            firstGroup={firstGroup}
+            lastGroup={lastGroup}
+          />
+        ) : null}
         {openEditModal ? (
           <ModalEditTask
             closeModal={() => setOpenEditModal(false)}
+            todoId={todoId}
+            groupId={groupId}
+          />
+        ) : null}
+
+        {openDeleteModal ? (
+          <ModalDeleteTask
+            closeModal={() => setOpenDeleteModal(false)}
             todoId={todoId}
             groupId={groupId}
           />
