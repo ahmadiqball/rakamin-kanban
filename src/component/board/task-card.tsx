@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { TaskDropdown } from './task-dropdown';
 import { ModalEditTask } from '../modal/modal-edit-task';
 import { ModalDeleteTask } from '../modal/modal-delete-task';
+import { useMutation, useQueryClient } from 'react-query';
+import { TodoQueryResult } from '~~/typings/query-type';
 
 interface TaskCardProps {
   firstGroup: boolean;
@@ -25,6 +27,52 @@ export function TaskCard({
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
+  const queryClient = useQueryClient();
+
+  const moveTodoItem = useMutation({
+    mutationFn: async (newGroupId: number) => {
+      const token = sessionStorage.getItem('userId');
+      const todosData: Array<TodoQueryResult> = queryClient.getQueryData(['todo', groupId]) || [];
+      const taskData = todosData.filter((todo) => todo.id === todoId)[0];
+      const data = {
+        name: taskData.name,
+        progress_percentage: taskData.progress_percentage,
+        target_todo_id: newGroupId,
+      };
+      const res = await fetch(
+        `https://todo-api-18-140-52-65.rakamin.com/todos/${groupId}/items/${todoId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        },
+      );
+
+      const resData = await res.json();
+
+      return resData;
+    },
+    onSuccess: (data) => {
+      if (!data.message) {
+        queryClient.setQueryData(['todo', groupId], (oldData?: Array<TodoQueryResult>) => {
+          const newData = oldData?.filter((todo) => todo.id !== data.id);
+          return newData || [];
+        });
+
+        queryClient.setQueryData(['todo', data.todo_id], (oldData?: Array<TodoQueryResult>) => {
+          oldData?.push(data);
+          oldData?.sort((a, b) => a.id - b.id);
+          return oldData || [];
+        });
+
+        setOpenDropdown(false);
+      }
+    },
+  });
+
   function openEditModalHandler() {
     setOpenEditModal(true);
     setOpenDropdown(false);
@@ -33,6 +81,11 @@ export function TaskCard({
   function openDeleteModalHandler() {
     setOpenDeleteModal(true);
     setOpenDropdown(false);
+  }
+
+  function moveTaskHandler(direction: string) {
+    const factor = direction === 'left' ? -1 : 1;
+    moveTodoItem.mutate(groupId + factor);
   }
 
   return (
@@ -71,6 +124,7 @@ export function TaskCard({
         </button>
         {openDropdown ? (
           <TaskDropdown
+            moveAction={moveTaskHandler}
             editAction={openEditModalHandler}
             deleteAction={openDeleteModalHandler}
             firstGroup={firstGroup}

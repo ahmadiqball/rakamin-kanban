@@ -3,6 +3,7 @@ import classNames from 'classnames';
 interface TaskDropdownProps {
   editAction: () => void;
   deleteAction: () => void;
+  moveAction: (direction: string) => void;
   firstGroup: boolean;
   lastGroup: boolean;
 }
@@ -12,6 +13,7 @@ export function TaskDropdown({
   firstGroup,
   lastGroup,
   deleteAction,
+  moveAction,
 }: TaskDropdownProps) {
   return (
     <div
@@ -23,14 +25,20 @@ export function TaskDropdown({
       )}
     >
       {!lastGroup ? (
-        <div className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'>
+        <div
+          onClick={() => moveAction('right')}
+          className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'
+        >
           <i className='i-kra-arrow text-2xl' />
           Move Right
         </div>
       ) : null}
 
       {!firstGroup ? (
-        <div className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'>
+        <div
+          onClick={() => moveAction('left')}
+          className='flex items-center gap-4 px-4 py-1.5 text-sm leading-6 hover:(color-blue-700 cursor-pointer)'
+        >
           <i className='i-kra-arrow text-2xl rotate-180' />
           Move Left
         </div>
